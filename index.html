@@ -1,0 +1,564 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Smart Irrigation System - Login</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #333;
+        }
+
+        .login-wrapper {
+            background: white;
+            padding: 40px;
+            border-radius: 20px;
+            box-shadow: 0 15px 40px rgba(0,0,0,0.2);
+            max-width: 450px;
+            width: 90%;
+            text-align: center;
+            animation: slideIn 0.6s ease-out;
+        }
+
+        @keyframes slideIn {
+            from {
+                opacity: 0;
+                transform: translateY(-30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .system-title {
+            color: #2c3e50;
+            font-size: 2.5rem;
+            font-weight: 700;
+            margin-bottom: 10px;
+        }
+
+        .system-subtitle {
+            color: #7f8c8d;
+            margin-bottom: 30px;
+            font-size: 1.1rem;
+        }
+
+        .login-form {
+            text-align: left;
+        }
+
+        .form-title {
+            color: #2c3e50;
+            font-size: 1.5rem;
+            margin-bottom: 25px;
+            text-align: center;
+        }
+
+        .input-group {
+            margin-bottom: 20px;
+        }
+
+        .input-group label {
+            display: block;
+            margin-bottom: 8px;
+            color: #2c3e50;
+            font-weight: 600;
+            font-size: 0.95rem;
+        }
+
+        .input-group input {
+            width: 100%;
+            padding: 15px;
+            border: 2px solid #ecf0f1;
+            border-radius: 12px;
+            font-size: 16px;
+            transition: all 0.3s ease;
+            outline: none;
+            background: #fafafa;
+        }
+
+        .input-group input:focus {
+            border-color: #3498db;
+            background: white;
+            box-shadow: 0 0 0 3px rgba(52, 152, 219, 0.1);
+        }
+
+        .login-button {
+            width: 100%;
+            padding: 15px;
+            background: linear-gradient(45deg, #3498db, #2980b9);
+            color: white;
+            border: none;
+            border-radius: 12px;
+            font-size: 16px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            margin-top: 15px;
+            position: relative;
+        }
+
+        .login-button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 25px rgba(52, 152, 219, 0.3);
+        }
+
+        .login-button:active {
+            transform: translateY(0);
+        }
+
+        .login-button:disabled {
+            opacity: 0.7;
+            cursor: not-allowed;
+            transform: none;
+        }
+
+        .loading-spinner {
+            display: none;
+            width: 20px;
+            height: 20px;
+            border: 2px solid transparent;
+            border-top: 2px solid white;
+            border-radius: 50%;
+            animation: spin 1s linear infinite;
+            margin-right: 10px;
+        }
+
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+
+        .demo-credentials {
+            background: #e8f4f8;
+            padding: 20px;
+            border-radius: 12px;
+            margin-top: 25px;
+            border-left: 4px solid #3498db;
+        }
+
+        .demo-credentials h4 {
+            color: #2c3e50;
+            margin-bottom: 10px;
+            font-size: 1.1rem;
+        }
+
+        .demo-credentials p {
+            color: #5a6c7d;
+            font-size: 14px;
+            margin: 5px 0;
+        }
+
+        .demo-credentials .credential-hint {
+            font-style: italic;
+            font-size: 12px;
+            color: #7f8c8d;
+            margin-top: 10px;
+        }
+
+        .alert-message {
+            padding: 15px;
+            border-radius: 8px;
+            margin-bottom: 20px;
+            font-weight: 500;
+            display: none;
+        }
+
+        .alert-error {
+            background: #ffe6e6;
+            color: #e74c3c;
+            border-left: 4px solid #e74c3c;
+        }
+
+        .alert-success {
+            background: #e8f5e8;
+            color: #27ae60;
+            border-left: 4px solid #27ae60;
+        }
+
+        .alert-info {
+            background: #e3f2fd;
+            color: #1976d2;
+            border-left: 4px solid #1976d2;
+        }
+
+        .system-features {
+            margin-top: 30px;
+            text-align: left;
+        }
+
+        .features-title {
+            color: #2c3e50;
+            margin-bottom: 15px;
+            text-align: center;
+            font-size: 1.1rem;
+        }
+
+        .feature-list {
+            list-style: none;
+            padding: 0;
+        }
+
+        .feature-item {
+            display: flex;
+            align-items: center;
+            margin-bottom: 12px;
+            font-size: 14px;
+            color: #5a6c7d;
+            padding: 8px 0;
+        }
+
+        .feature-icon {
+            margin-right: 12px;
+            font-size: 16px;
+            min-width: 20px;
+        }
+
+        .footer-text {
+            margin-top: 25px;
+            font-size: 12px;
+            color: #95a5a6;
+            text-align: center;
+        }
+
+        /* Responsive Design */
+        @media (max-width: 480px) {
+            .login-wrapper {
+                padding: 30px 20px;
+                margin: 20px;
+            }
+
+            .system-title {
+                font-size: 2rem;
+            }
+
+            .input-group input,
+            .login-button {
+                padding: 12px;
+                font-size: 15px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="login-wrapper">
+        <!-- System Header -->
+        <h1 class="system-title">🌱 Smart Irrigation</h1>
+        <p class="system-subtitle">Intelligent Agricultural Water Management System</p>
+        
+        <!-- Alert Messages -->
+        <div id="alertContainer"></div>
+        
+        <!-- Login Form -->
+        <form class="login-form" id="loginForm">
+            <h2 class="form-title">Login to Dashboard</h2>
+            
+            <div class="input-group">
+                <label for="username">Username</label>
+                <input 
+                    type="text" 
+                    id="username" 
+                    name="username" 
+                    placeholder="Enter your username"
+                    required
+                    autocomplete="username"
+                >
+            </div>
+            
+            <div class="input-group">
+                <label for="password">Password</label>
+                <input 
+                    type="password" 
+                    id="password" 
+                    name="password" 
+                    placeholder="Enter your password"
+                    required
+                    autocomplete="current-password"
+                >
+            </div>
+            
+            <button type="submit" class="login-button" id="loginBtn">
+                <span class="loading-spinner" id="loadingSpinner"></span>
+                <span id="buttonText">Login to Dashboard</span>
+            </button>
+        </form>
+        
+        <!-- Demo Credentials -->
+        <div class="demo-credentials">
+            <h4>Demo Login Credentials</h4>
+            <p><strong>Username:</strong> farmer</p>
+            <p><strong>Password:</strong> 1234</p>
+            <p class="credential-hint">Double-click this box to auto-fill credentials</p>
+        </div>
+        
+        <!-- System Features -->
+        <!-- <div class="system-features">
+            <h4 class="features-title">System Capabilities</h4>
+            <ul class="feature-list">
+                <li class="feature-item">
+                    <span class="feature-icon">📊</span>
+                    <span>Real-time sensor monitoring and analytics</span>
+                </li>
+                <li class="feature-item">
+                    <span class="feature-icon">🤖</span>
+                    <span>AI-powered agricultural assistant and recommendations</span>
+                </li>
+                <li class="feature-item">
+                    <span class="feature-icon">💧</span>
+                    <span>Automated irrigation pump control system</span>
+                </li>
+                <li class="feature-item">
+                    <span class="feature-icon">🌐</span>
+                    <span>ThingSpeak IoT cloud integration</span>
+                </li>
+                <li class="feature-item">
+                    <span class="feature-icon">📱</span>
+                    <span>Mobile-responsive dashboard interface</span>
+                </li>
+                <li class="feature-item">
+                    <span class="feature-icon">⚡</span>
+                    <span>Smart alerts and notifications system</span>
+                </li>
+            </ul>
+        </div>
+         -->
+        <!-- <p class="footer-text">
+            Smart Irrigation System v2.0 | Flask + HTML5 Implementation
+        </p> -->
+    </div>
+
+    <script>
+        // Application State Management
+        const AppState = {
+            isLogging: false,
+            redirectTimer: null
+        };
+
+        // Utility Functions
+        function showAlert(message, type = 'error') {
+            const alertContainer = document.getElementById('alertContainer');
+            const alertDiv = document.createElement('div');
+            alertDiv.className = `alert-message alert-${type}`;
+            alertDiv.textContent = message;
+            alertDiv.style.display = 'block';
+            
+            // Clear previous alerts
+            alertContainer.innerHTML = '';
+            alertContainer.appendChild(alertDiv);
+            
+            // Auto-hide success messages
+            if (type === 'success') {
+                setTimeout(() => {
+                    alertDiv.style.display = 'none';
+                }, 5000);
+            }
+        }
+
+        function hideAlerts() {
+            const alertContainer = document.getElementById('alertContainer');
+            alertContainer.innerHTML = '';
+        }
+
+        function setLoadingState(isLoading) {
+            const loginBtn = document.getElementById('loginBtn');
+            const buttonText = document.getElementById('buttonText');
+            const loadingSpinner = document.getElementById('loadingSpinner');
+            
+            AppState.isLogging = isLoading;
+            loginBtn.disabled = isLoading;
+            
+            if (isLoading) {
+                buttonText.textContent = 'Authenticating...';
+                loadingSpinner.style.display = 'inline-block';
+            } else {
+                buttonText.textContent = 'Login to Dashboard';
+                loadingSpinner.style.display = 'none';
+            }
+        }
+
+        // Authentication Functions - UPDATED for Flask
+        async function authenticateUser(credentials) {
+            try {
+                const response = await fetch('/api/login', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'Accept': 'application/json'
+                    },
+                    body: JSON.stringify(credentials)
+                });
+
+                const data = await response.json();
+                
+                if (!response.ok) {
+                    throw new Error(data.message || `Server error: ${response.status}`);
+                }
+                
+                return data;
+                
+            } catch (error) {
+                if (error.name === 'TypeError' && error.message.includes('fetch')) {
+                    throw new Error('Unable to connect to server. Please check if the Flask app is running on port 5000.');
+                }
+                throw error;
+            }
+        }
+
+        function saveUserSession(userData) {
+            localStorage.setItem('isLoggedIn', 'true');
+            localStorage.setItem('username', userData.username);
+            localStorage.setItem('loginTime', new Date().toISOString());
+            localStorage.setItem('sessionData', JSON.stringify(userData));
+        }
+
+        function redirectToDashboard() {
+            showAlert('Login successful! Redirecting to dashboard...', 'success');
+            
+            AppState.redirectTimer = setTimeout(() => {
+                window.location.href = '/dashboard';
+            }, 1500);
+        }
+
+        // Form Event Handlers
+        async function handleLoginSubmit(event) {
+            event.preventDefault();
+            
+            if (AppState.isLogging) return;
+            
+            hideAlerts();
+            
+            const formData = new FormData(event.target);
+            const credentials = {
+                username: formData.get('username').trim(),
+                password: formData.get('password')
+            };
+            
+            // Basic validation
+            if (!credentials.username || !credentials.password) {
+                showAlert('Please fill in both username and password fields.');
+                return;
+            }
+            
+            setLoadingState(true);
+            
+            try {
+                const response = await authenticateUser(credentials);
+                
+                if (response.success) {
+                    saveUserSession(response);
+                    redirectToDashboard();
+                } else {
+                    showAlert(response.message || 'Login failed. Please try again.');
+                }
+                
+            } catch (error) {
+                console.error('Login error:', error);
+                showAlert(error.message || 'An unexpected error occurred. Please try again.');
+            } finally {
+                setLoadingState(false);
+            }
+        }
+
+        function handleDemoCredentialsFill() {
+            document.getElementById('username').value = 'farmer';
+            document.getElementById('password').value = '1234';
+            
+            // Add visual feedback
+            const demoBox = document.querySelector('.demo-credentials');
+            const originalBg = demoBox.style.backgroundColor;
+            demoBox.style.backgroundColor = '#d4edda';
+            
+            setTimeout(() => {
+                demoBox.style.backgroundColor = originalBg;
+            }, 500);
+        }
+
+        // Session Management
+        function checkExistingSession() {
+            const isLoggedIn = localStorage.getItem('isLoggedIn');
+            const loginTime = localStorage.getItem('loginTime');
+            
+            if (isLoggedIn === 'true' && loginTime) {
+                const sessionAge = Date.now() - new Date(loginTime).getTime();
+                const maxSessionAge = 24 * 60 * 60 * 1000; // 24 hours
+                
+                if (sessionAge < maxSessionAge) {
+                    showAlert('Active session found. Redirecting to dashboard...', 'info');
+                    setTimeout(() => {
+                        window.location.href = '/dashboard';
+                    }, 1000);
+                    return true;
+                } else {
+                    // Clear expired session
+                    localStorage.clear();
+                }
+            }
+            return false;
+        }
+
+        // Keyboard Event Handlers
+        function handleKeyboardShortcuts(event) {
+            // Ctrl + Enter to submit form
+            if (event.ctrlKey && event.key === 'Enter') {
+                event.preventDefault();
+                document.getElementById('loginForm').dispatchEvent(new Event('submit'));
+            }
+            
+            // Escape to clear form
+            if (event.key === 'Escape') {
+                document.getElementById('loginForm').reset();
+                hideAlerts();
+            }
+        }
+
+        // Initialization
+        function initializeLoginPage() {
+            // Check for existing session
+            if (checkExistingSession()) {
+                return;
+            }
+            
+            // Set up event listeners
+            document.getElementById('loginForm').addEventListener('submit', handleLoginSubmit);
+            document.querySelector('.demo-credentials').addEventListener('dblclick', handleDemoCredentialsFill);
+            document.addEventListener('keydown', handleKeyboardShortcuts);
+            
+            // Focus on username field
+            setTimeout(() => {
+                document.getElementById('username').focus();
+            }, 100);
+            
+            // Clean up any existing timers
+            if (AppState.redirectTimer) {
+                clearTimeout(AppState.redirectTimer);
+            }
+            
+            console.log('Smart Irrigation Login System Initialized');
+            console.log('Flask Backend: http://localhost:5000');
+        }
+
+        // Start the application
+        document.addEventListener('DOMContentLoaded', initializeLoginPage);
+        
+        // Cleanup on page unload
+        window.addEventListener('beforeunload', () => {
+            if (AppState.redirectTimer) {
+                clearTimeout(AppState.redirectTimer);
+            }
+        });
+    </script>
+</body>
+</html>
